@@ -1,6 +1,7 @@
 @use 'variables' as *;
-@use 'ui/buttons';
-@use 'ui/status-bar';
+@use './ui';
+
+@use 'sass:color';
 
 /* === General  === */
 body {
@@ -81,4 +82,58 @@ p {
 
 .fade-in {
 	animation: fadeIn 0.5s ease-in-out;
+}
+
+/* === Buttons === */
+
+button {
+	color: $text-color;
+	background-color: $button-primary;
+	padding: $spacing-medium $spacing-large;
+	margin: $spacing-small;
+	font-size: $font-size-medium;
+	font-family: $font-family;
+	border: 0;
+	border-radius: $border-radius;
+	box-shadow: $box-shadow;
+	cursor: pointer;
+	transition: transform 0.1s ease, box-shadow 0.1s ease;
+
+	&:hover {
+		background-color: color.scale($button-primary, $lightness: -5%);
+	}
+
+	&:active {
+		transform: translateY(5px);
+		box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black,
+			inset 0px 5px #00000038;
+	}
+}
+
+.button--primary {
+	background-color: $primary-color;
+}
+
+.button--secondary {
+	background-color: $secondary-color;
+}
+
+.button--small {
+	padding: $spacing-small $spacing-medium;
+	font-size: $font-size-small;
+}
+
+.button--large {
+	padding: $spacing-large 50px;
+	font-size: $font-size-large;
+}
+
+.button--disabled {
+	background-color: $button-disabled;
+	cursor: not-allowed;
+	opacity: $opacity-disabled;
+
+	&:hover {
+		background-color: $button-disabled;
+	}
 }

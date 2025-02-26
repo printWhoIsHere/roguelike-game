@@ -1,9 +1,13 @@
+import { Modal } from '@ui/modal'
+
 export class StatusBar {
 	private element: HTMLElement
+	private modal: Modal
 
 	constructor() {
 		this.element = document.createElement('div')
 		this.element.className = 'status-bar'
+		this.modal = new Modal()
 		this.render()
 	}
 
@@ -25,8 +29,11 @@ export class StatusBar {
 					<span class="stat__value">75/100</span>
 				</div>
 			</div>
-			<button class="status-bar__menu-button">Menu</button>
+			<button class="menu-button">Menu</button>
 		`
+
+		const menuButton = this.element.querySelector('.menu-button')
+		menuButton?.addEventListener('click', () => this.modal.show())
 	}
 
 	public getElement(): HTMLElement {
