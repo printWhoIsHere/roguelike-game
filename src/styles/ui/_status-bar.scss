@@ -1,0 +1,76 @@
+@use '../variables' as *;
+@use 'sass:color';
+
+.status-bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: $background-color;
+	padding: $spacing-small $spacing-medium;
+	border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+	color: $text-color;
+	font-family: $font-family;
+
+	.status-bar__stats {
+		display: flex;
+		gap: $spacing-large;
+
+		.stat {
+			display: flex;
+			align-items: center;
+			gap: $spacing-small;
+
+			.stat__label {
+				font-size: $font-size-small;
+			}
+
+			.stat__bar {
+				width: 100px;
+				height: 10px;
+				background-color: rgba(255, 255, 255, 0.1);
+				border-radius: $border-radius;
+				overflow: hidden;
+
+				.stat__bar-fill {
+					height: 100%;
+					border-radius: $border-radius;
+				}
+			}
+
+			.stat__value {
+				font-size: $font-size-small;
+				font-weight: bold;
+			}
+
+			&.stat--health .stat__bar-fill {
+				background-color: $secondary-color;
+			}
+
+			&.stat--mana .stat__bar-fill {
+				background-color: $primary-color;
+			}
+		}
+	}
+
+	.status-bar__menu-button {
+		background-color: $button-primary;
+		color: $text-color;
+		padding: $spacing-small $spacing-medium;
+		font-size: $font-size-small;
+		border: 0;
+		border-radius: $border-radius;
+		box-shadow: $box-shadow;
+		cursor: pointer;
+		transition: transform 0.1s ease, box-shadow 0.1s ease;
+
+		&:hover {
+			background-color: color.scale($button-primary, $lightness: -5%);
+		}
+
+		&:active {
+			transform: translateY(5px);
+			box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black,
+				inset 0px 5px #00000038;
+		}
+	}
+}

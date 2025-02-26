@@ -1,0 +1,38 @@
+// Цвета
+$primary-color: #4a90e2;
+$secondary-color: #ff4757;
+$background-color: #2c3e50;
+$text-color: #ecf0f1;
+$canvas-background: #000;
+
+// Цвета для кнопок
+$button-primary: #6abc3a;
+$button-secondary: #ff4757;
+$button-disabled: #7f8c8d;
+
+// Тени
+$box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black,
+	0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038,
+	inset 0px 5px #ffffff36;
+
+// Размеры
+$border-radius: 8px;
+$spacing-small: 8px;
+$spacing-medium: 16px;
+$spacing-large: 24px;
+
+// Шрифты
+$font-family: 'Press Start 2P', system-ui;
+$font-size-small: 12px;
+$font-size-medium: 14px;
+$font-size-large: 16px;
+
+// Анимации
+$transition-speed: 0.3s;
+
+// Размеры игрового холста
+$canvas-width: 800px;
+$canvas-height: 600px;
+
+// Дополнительные переменные
+$opacity-disabled: 0.5;
