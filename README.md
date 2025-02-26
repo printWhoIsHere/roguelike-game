@@ -25,7 +25,7 @@
 2. Клонируйте репозиторий:
 
 ```bash
-git clone https://github.com/ваш-username/roguelike-game.git
+git clone https://github.com/printWhoIsHere/roguelike-game.git
 cd roguelike-game
 ```
 
