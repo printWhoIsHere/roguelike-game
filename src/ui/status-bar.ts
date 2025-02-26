@@ -29,7 +29,10 @@ export class StatusBar {
 					<span class="stat__value">75/100</span>
 				</div>
 			</div>
-			<button class="menu-button">Menu</button>
+			<div>
+				<button class="menu-button">Menu</button>
+				<button class="menu-button">P</button>
+			</div>
 		`
 
 		const menuButton = this.element.querySelector('.menu-button')

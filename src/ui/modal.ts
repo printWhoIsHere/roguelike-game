@@ -11,7 +11,13 @@ export class Modal {
 		this.modalContent.innerHTML = `
 			<h2>Menu</h2>
 			<p>This is the game menu.</p>
-			<button class="close-button">Close</button>
+			<button class="close-button">Resume</button>
+			<button>Settings</button>
+
+			<div class="slider-container">
+				<input type="range" class="slider" id="slider-1" min="0" max="100" value="50">
+				<input type="range" class="slider" id="slider-2" min="0" max="100" value="50">
+			</div>
 		`
 
 		this.modalElement.appendChild(this.modalContent)
