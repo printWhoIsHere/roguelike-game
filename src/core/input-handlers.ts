@@ -8,7 +8,7 @@ export enum Direction {
 	Right = 'right',
 }
 
-export class InputHandlers {
+export class InputHandler {
 	constructor(
 		private player: Player,
 		private map: Tile[][],

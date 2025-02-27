@@ -1,7 +1,8 @@
+import { TILE_SIZE } from '@/constants'
 import { Tile, IPoint } from '@/types'
 
 export class Renderer {
-	private readonly tileSize = 10
+	private readonly tileSize = TILE_SIZE
 
 	constructor(private readonly canvas: HTMLCanvasElement) {}
 
