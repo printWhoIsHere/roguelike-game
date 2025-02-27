@@ -1,7 +1,8 @@
+@use 'sass:color';
+
 @use 'variables' as *;
 @use './ui';
-
-@use 'sass:color';
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 /* === General  === */
 body {
