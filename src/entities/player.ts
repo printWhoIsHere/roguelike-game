@@ -1,39 +1,39 @@
-import { Tile } from '@/types'
-import { Direction } from '@/core/input-handlers'
+import { Entity } from './entity'
+import { IPoint, IPlayer } from '@/types'
 
-export class Player {
-	constructor(public x: number, public y: number) {}
+export class Player extends Entity implements IPlayer {
+	public mana: number
+	public maxMana: number
+	public inventory: string[]
 
-	public move(direction: Direction, map: Tile[][]): boolean {
-		let newX = this.x
-		let newY = this.y
+	constructor(position: IPoint) {
+		super(position, 100, 10, 1)
+		this.mana = 50
+		this.maxMana = 50
+		this.inventory = []
+	}
 
-		switch (direction) {
-			case Direction.Up:
-				newY--
-				break
-			case Direction.Down:
-				newY++
-				break
-			case Direction.Left:
-				newX--
-				break
-			case Direction.Right:
-				newX++
-				break
-		}
-
-		if (
-			newX >= 0 &&
-			newX < map[0].length &&
-			newY >= 0 &&
-			newY < map.length &&
-			map[newY][newX] === 'floor'
-		) {
-			this.x = newX
-			this.y = newY
+	public useAbility(abilityCost: number): boolean {
+		if (this.mana >= abilityCost) {
+			this.mana -= abilityCost
 			return true
 		}
 		return false
+	}
+
+	public addToInventory(item: string): void {
+		this.inventory.push(item)
+	}
+
+	public getMana(): number {
+		return this.mana
+	}
+
+	public getMaxMana(): number {
+		return this.maxMana
+	}
+
+	public getInventory(): string[] {
+		return [...this.inventory]
 	}
 }

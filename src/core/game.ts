@@ -20,7 +20,7 @@ export class Game {
 		this.canvas.height = height * TILE_SIZE
 
 		const startingPosition = this.dungeonManager.getStartingPosition()
-		this.player = new Player(startingPosition.x, startingPosition.y)
+		this.player = new Player(startingPosition)
 		this.inputHandler = new InputHandler(
 			this.player,
 			this.dungeonManager.getDungeon(),
@@ -38,9 +38,9 @@ export class Game {
 	}
 
 	private render(): void {
-		this.renderer.render(this.dungeonManager.getDungeon(), {
-			x: this.player.x,
-			y: this.player.y,
-		})
+		this.renderer.render(
+			this.dungeonManager.getDungeon(),
+			this.player.getPosition()
+		)
 	}
 }
