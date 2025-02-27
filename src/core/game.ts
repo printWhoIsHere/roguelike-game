@@ -1,42 +1,46 @@
-import { DungeonGenerator } from '@/dungeon/generator'
 import { Renderer } from './renderer'
 import { InputHandler } from './input-handlers'
 import { Player } from '@/entities/player'
-import { Tile } from '@/types'
-import { settings } from '@/settings'
 import { TILE_SIZE } from '@/constants'
+import { settings } from '@/settings'
+import { DungeonManager } from '@/dungeon/manager'
 
 export class Game {
-	private dungeon: Tile[][]
+	private dungeonManager: DungeonManager
 	private renderer: Renderer
 	private inputHandler: InputHandler
 	private player: Player
 
 	constructor(private canvas: HTMLCanvasElement) {
-		const { width, height, minRoomSize } = settings.dungeon.size.medium
-		const dungeonGenerator = new DungeonGenerator(width, height, minRoomSize)
-		this.dungeon = dungeonGenerator.generateDungeon()
+		this.dungeonManager = new DungeonManager('medium')
 		this.renderer = new Renderer(this.canvas)
 
+		const { width, height } = settings.dungeon.size.medium
 		this.canvas.width = width * TILE_SIZE
 		this.canvas.height = height * TILE_SIZE
 
-		this.player = new Player(Math.floor(width / 2), Math.floor(height / 2))
-		this.inputHandler = new InputHandler(this.player, this.dungeon, () =>
-			this.render()
+		const startingPosition = this.dungeonManager.getStartingPosition()
+		this.player = new Player(startingPosition.x, startingPosition.y)
+		this.inputHandler = new InputHandler(
+			this.player,
+			this.dungeonManager.getDungeon(),
+			() => this.render()
 		)
 	}
 
-	public start() {
+	public start(): void {
 		this.gameLoop()
 	}
 
-	private gameLoop() {
+	private gameLoop(): void {
 		this.render()
 		requestAnimationFrame(() => this.gameLoop())
 	}
 
-	private render() {
-		this.renderer.render(this.dungeon, { x: this.player.x, y: this.player.y })
+	private render(): void {
+		this.renderer.render(this.dungeonManager.getDungeon(), {
+			x: this.player.x,
+			y: this.player.y,
+		})
 	}
 }

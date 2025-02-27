@@ -21,13 +21,52 @@ export class DungeonGenerator {
 		this.splitNode(root, 4)
 		this.createRooms(root)
 		this.connectRooms()
+		this.ensureBorderWalls()
 		return this.map
+	}
+
+	public createStartingRoom(): IPoint {
+		const innerRoomSize = 3
+		const outerRoomSize = innerRoomSize + 2
+		const roomX = randomInt(0, this.width - outerRoomSize)
+		const roomY = randomInt(0, this.height - outerRoomSize)
+
+		for (let i = roomY; i < roomY + outerRoomSize; i++) {
+			for (let j = roomX; j < roomX + outerRoomSize; j++) {
+				if (i < this.height && j < this.width) {
+					if (
+						i === roomY ||
+						i === roomY + outerRoomSize - 1 ||
+						j === roomX ||
+						j === roomX + outerRoomSize - 1
+					) {
+						this.map[i][j] = 'wall'
+					} else {
+						this.map[i][j] = 'floor'
+					}
+				}
+			}
+		}
+
+		this.rooms.push({
+			x: roomX + 1,
+			y: roomY + 1,
+			width: innerRoomSize,
+			height: innerRoomSize,
+		})
+
+		return {
+			x: roomX + Math.floor(outerRoomSize / 2),
+			y: roomY + Math.floor(outerRoomSize / 2),
+		}
 	}
 
 	private splitNode(node: BSPNode, depth: number): void {
 		if (depth <= 0) return
+
 		const splitHorizontal = Math.random() < 0.5
 		if (splitHorizontal) {
+			if (node.height < this.minRoomSize * 2) return
 			const splitPos = randomInt(
 				this.minRoomSize,
 				node.height - this.minRoomSize
@@ -40,6 +79,7 @@ export class DungeonGenerator {
 				node.height - splitPos
 			)
 		} else {
+			if (node.width < this.minRoomSize * 2) return
 			const splitPos = randomInt(
 				this.minRoomSize,
 				node.width - this.minRoomSize
@@ -52,8 +92,8 @@ export class DungeonGenerator {
 				node.height
 			)
 		}
-		this.splitNode(node.left, depth - 1)
-		this.splitNode(node.right, depth - 1)
+		this.splitNode(node.left!, depth - 1)
+		this.splitNode(node.right!, depth - 1)
 	}
 
 	private createRooms(node: BSPNode): void {
@@ -61,19 +101,29 @@ export class DungeonGenerator {
 			this.createRooms(node.left)
 			this.createRooms(node.right)
 		} else {
-			const roomWidth = randomInt(this.minRoomSize, node.width)
-			const roomHeight = randomInt(this.minRoomSize, node.height)
+			const maxWidth = Math.min(node.width, this.width - node.x)
+			const maxHeight = Math.min(node.height, this.height - node.y)
+			const roomWidth = randomInt(this.minRoomSize, maxWidth)
+			const roomHeight = randomInt(this.minRoomSize, maxHeight)
 			const roomX = node.x + randomInt(0, node.width - roomWidth)
 			const roomY = node.y + randomInt(0, node.height - roomHeight)
-			this.rooms.push({
-				x: roomX,
-				y: roomY,
-				width: roomWidth,
-				height: roomHeight,
-			})
-			for (let i = roomY; i < roomY + roomHeight; i++) {
-				for (let j = roomX; j < roomX + roomWidth; j++) {
-					this.map[i][j] = 'floor'
+
+			if (
+				roomX + roomWidth <= this.width &&
+				roomY + roomHeight <= this.height
+			) {
+				this.rooms.push({
+					x: roomX,
+					y: roomY,
+					width: roomWidth,
+					height: roomHeight,
+				})
+				for (let i = roomY; i < roomY + roomHeight; i++) {
+					for (let j = roomX; j < roomX + roomWidth; j++) {
+						if (i < this.height && j < this.width) {
+							this.map[i][j] = 'floor'
+						}
+					}
 				}
 			}
 		}
@@ -103,7 +153,20 @@ export class DungeonGenerator {
 			else if (x > pointB.x) x--
 			else if (y < pointB.y) y++
 			else if (y > pointB.y) y--
-			this.map[y][x] = 'floor'
+			if (x >= 0 && x < this.width && y >= 0 && y < this.height) {
+				this.map[y][x] = 'floor'
+			}
+		}
+	}
+
+	private ensureBorderWalls(): void {
+		for (let i = 0; i < this.height; i++) {
+			this.map[i][0] = 'wall'
+			this.map[i][this.width - 1] = 'wall'
+		}
+		for (let j = 0; j < this.width; j++) {
+			this.map[0][j] = 'wall'
+			this.map[this.height - 1][j] = 'wall'
 		}
 	}
 }

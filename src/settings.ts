@@ -20,5 +20,20 @@ export const settings = {
 				maxRooms: 15,
 			},
 		},
+
+		difficulty: {
+			easy: {
+				enemyCount: 5,
+				trapCount: 2,
+			},
+			normal: {
+				enemyCount: 10,
+				trapCount: 5,
+			},
+			hard: {
+				enemyCount: 15,
+				trapCount: 10,
+			},
+		},
 	},
 }

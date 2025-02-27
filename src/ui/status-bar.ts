@@ -3,12 +3,21 @@ import { Modal } from '@ui/modal'
 export class StatusBar {
 	private element: HTMLElement
 	private modal: Modal
+	private healthValue: HTMLElement
+	private healthBar: HTMLElement
 
 	constructor() {
 		this.element = document.createElement('div')
 		this.element.className = 'status-bar'
 		this.modal = new Modal()
 		this.render()
+
+		this.healthValue = this.element.querySelector(
+			'.stat--health .stat__value'
+		) as HTMLElement
+		this.healthBar = this.element.querySelector(
+			'.stat--health .stat__bar-fill'
+		) as HTMLElement
 	}
 
 	private render(): void {
@@ -41,5 +50,10 @@ export class StatusBar {
 
 	public getElement(): HTMLElement {
 		return this.element
+	}
+
+	public updateHealth(health: number): void {
+		this.healthValue.textContent = `${health}/100`
+		this.healthBar.style.width = `${health}%`
 	}
 }
