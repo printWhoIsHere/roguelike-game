@@ -12,6 +12,11 @@ export interface IPoint {
 	y: number
 }
 
+export interface SpriteCoordinates {
+	x: number
+	y: number
+}
+
 export type Direction = 'up' | 'down' | 'left' | 'right'
 
 export interface IEntity {
