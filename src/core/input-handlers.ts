@@ -1,16 +1,8 @@
-import { Player } from '@/entities/player'
-import { Tile } from '@/types'
-
-export enum Direction {
-	Up = 'up',
-	Down = 'down',
-	Left = 'left',
-	Right = 'right',
-}
+import { IPlayer, Tile } from '@/types'
 
 export class InputHandler {
 	constructor(
-		private player: Player,
+		private player: IPlayer,
 		private map: Tile[][],
 		private onMove: () => void
 	) {
@@ -32,22 +24,22 @@ export class InputHandler {
 			case 'ArrowUp':
 			case 'w':
 			case 'W':
-				moved = this.player.move(Direction.Up, this.map)
+				moved = this.player.move('up', this.map)
 				break
 			case 'ArrowDown':
 			case 's':
 			case 'S':
-				moved = this.player.move(Direction.Down, this.map)
+				moved = this.player.move('down', this.map)
 				break
 			case 'ArrowLeft':
 			case 'a':
 			case 'A':
-				moved = this.player.move(Direction.Left, this.map)
+				moved = this.player.move('left', this.map)
 				break
 			case 'ArrowRight':
 			case 'd':
 			case 'D':
-				moved = this.player.move(Direction.Right, this.map)
+				moved = this.player.move('right', this.map)
 				break
 		}
 
